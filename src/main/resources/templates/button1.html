@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Button Results</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#checkbox').change(function() {
+                if (this.checked) {
+                    var currentURL = window.location.href;
+                    var text = currentURL.substring(currentURL.lastIndexOf('/') + 1);
+                    $.ajax({
+                        url: "/api/get-top-stories/" + text,
+                        type: "GET",
+                        success: function(response) {
+                            console.log(response);
+                            var resultElement = $('#result');
+                            resultElement.empty();
+
+                            if (response.length === 0) {
+                                resultElement.append('<li>No top stories found.</li>');
+                            } else {
+                                $.each(response, function(index, url) {
+                                    resultElement.append('<li><a href="' + url + '">' + url + '</a></li>');
+                                });
+                            }
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    <link href="/main.css" rel="stylesheet">
+
+</head>
+<body>
+<div>
+    <div id="navbar">
+        <img id="logo" src="/logo.svg" alt="Logo">
+        <h2 id="navbar-username">Welcome, <span th:text="${session.username}"></span> </h2>
+    </div>
+
+    <div class="card-container">
+        <div id="wrap">
+            <div th:each="url : ${result}">
+                <div class="card">
+                    <p class="card-title"> <span th:text="${url.title}"></span></p>
+                    <div class="card-line"></div>
+                    <p class="card-citation"> <span th:text="${url.q}"></span></p>
+                    <div class="card-line"></div>
+                    <a th:href="@{${url.href}}" class="buttonurl">URL!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul id="result"></ul>
+    <input type="checkbox" id="checkbox"> Fetch top stories
+</div>
+
+</body>
+</html>

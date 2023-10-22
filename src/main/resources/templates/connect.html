@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>RMI Connection</title>
+  <link href="/main.css" rel="stylesheet">
+
+</head>
+<body>
+<div id="login-body">
+  <h1 id="align-welcome">Bem-vindo ao <img id="logo" src="/logo.svg" alt="Logo"></h1>
+
+  <form id="login-input" action="#" th:action="@{/connect}" th:object="${username}" method="post">
+    <input type="text" id="username"  placeholder="Username" th:field="*{username}" required>
+    <input type="password" id="password"  placeholder="Password" required>
+    <button id="login-button"  type="submit">Login</button>
+  </form>
+
+</div>
+</body>
+</html>

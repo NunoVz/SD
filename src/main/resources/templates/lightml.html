@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LIG Results</title>
+    <link href="/main.css" rel="stylesheet">
+
+</head>
+<body>
+<div>
+    <div id="navbar">
+        <img id="logo" src="/logo.svg" alt="Logo">
+        <h2 id="navbar-username">Welcome, <span th:text="${session.username}"></span> </h2>
+    </div>
+
+    <div class="card-container">
+        <div id="wrap">
+            <div th:each="url : ${result}">
+                <div class="card">
+                    <p class="card-title"> <span th:text="${url.title}"></span></p>
+                    <div class="card-line"></div>
+                    <p class="card-citation"> <span th:text="${url.q}"></span></p>
+                    <div class="card-line"></div>
+                    <a th:href="@{${url.href}}" class="buttonurl">URL!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
